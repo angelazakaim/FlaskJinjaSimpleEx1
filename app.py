@@ -4,42 +4,50 @@ import logging
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
 
-# Load environment variables FIRST, before any other imports
-env = os.environ.get("FLASK_ENV", "development")
-if env == "production":
-    load_dotenv(".env.production", override=True)
-else:
-    load_dotenv(".env", override=True)
 
-# NOW import config (after .env is loaded)
+# Load .env ONLY for local development
+if os.environ.get("FLASK_ENV") != "production":
+    load_dotenv()
+
+# Imports AFTER env vars are loaded
 from config import config_map
-from database import db
+from database import db , migrate
 from models import Client, Car
 from routes.client_routes import clients_bp
 from routes.car_routes import cars_bp
 
 
 def create_app():
+    # Determine environment
+    env = os.environ.get("FLASK_ENV") or "development"
+
+    # Select config
+    config_class = config_map.get(env)
+    if not config_class:
+        raise RuntimeError(f"Invalid FLASK_ENV: {env}")
+
+    # Create app
     app = Flask(__name__)
-    config_class = config_map[env]
-    config_class.validate()
     app.config.from_object(config_class)
+    config_class.validate()
 
+    # Init extensions
     db.init_app(app)
+    migrate.init_app(app, db)
 
-    # Logging middleware
+    # Logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+    )
+
     @app.before_request
-    def log_action():
-        logging.info(f"{request.method} {request.path}")
+    def log_request():
+        logging.info("%s %s", request.method, request.path)
 
-    # Register Blueprints with updated names
+    # Blueprints
     app.register_blueprint(clients_bp, url_prefix="/clients")
     app.register_blueprint(cars_bp, url_prefix="/cars")
-
-    # DEV tables
-    if env == "development":
-        with app.app_context():
-            db.create_all()
 
     # Routes
     @app.route("/")
@@ -48,7 +56,7 @@ def create_app():
 
     return app
 
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     app = create_app()
     app.run()
