@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cars.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="cars-header">
+    <h1>Cars in Garage</h1>
+    <a href="{{ url_for('cars_bp.add_car_route') }}" class="btn-add-car">+ Add New Car</a>
+</div>
+
+<p>cars variable = {{ cars }}</p>
+{% if cars %}
+<p>There are currently {{cars|length}} cars in the garage</p>
+<div class="cars-container">
+    {% for car in cars %}
+    <a href="{{ url_for('cars_bp.view_car_details', id=car.id) }}" class="car-card-link">
+        <div class="car-card">
+            <h3>{{ car.brand }} {{ car.model }}</h3>
+            <p>Year: {{ car.year }}</p>
+            <p>Plate: {{ car.plate_number }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% else %}
+<p>Garage is empty</p>
+<a href="{{ url_for('cars_bp.add_car_route') }}" class="btn-add-first-car">Add Your First Car</a>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_script %}
+<!-- No extra scripts needed -->
+{% endblock %}

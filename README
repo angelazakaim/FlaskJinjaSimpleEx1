@@ -1,0 +1,18 @@
+Generate production secret:
+python -c "import secrets; print(secrets.token_hex(32))"
+
+
+6️⃣ HOW TO RUN EACH ENVIRONMENT
+Development
+export FLASK_ENV=development  # macOS/Linux
+set FLASK_ENV=development     # Windows
+
+python run.py
+
+Production
+export FLASK_ENV=production
+python run.py
+
+
+(Real prod usually sets env vars via server, Docker, or CI/CD)
+

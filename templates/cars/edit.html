@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="edit-car">
+    <h1>Edit Car Details</h1>
+
+    <form method="POST" action="{{ url_for('cars_bp.edit_car_route', id=car.id) }}" class="edit-car-form">
+
+        <fieldset>
+            <legend>Car Information</legend>
+
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <input id="brand" type="text" name="brand" value="{{ car.brand }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Model</label>
+                <input id="model" type="text" name="model" value="{{ car.model }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input id="color" type="color" name="color" value="{{ car.color }}">
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input id="year" type="number" name="year" min="1948" value="{{ car.year }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="plate_number">Plate Number</label>
+                <input id="plate_number" type="text" name="plate_number" value="{{ car.plate_number }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    {% for status in statuses %}
+                        <option value="{{ status.value }}"
+                            {% if status == car.status %}selected{% endif %}>
+                            {{ status.value|capitalize }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Owner Information</legend>
+
+            <div class="form-group">
+                <label for="owner_first_name">First Name</label>
+                <input id="owner_first_name" type="text" name="owner_first_name"
+                       value="{{ car.owner.firstname }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="owner_last_name">Last Name</label>
+                <input id="owner_last_name" type="text" name="owner_last_name"
+                       value="{{ car.owner.lastname }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="owner_email">Email</label>
+                <input id="owner_email" type="email" name="owner_email"
+                       value="{{ car.owner.email }}" >
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <button type="submit">Save Changes</button>
+            <a href="{{ url_for('cars_bp.list_cars_route') }}" class="cancel-link">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

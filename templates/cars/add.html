@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="add-car">
+    <h1>Add New Car</h1>
+
+    <form method="POST" action="{{ url_for('cars_bp.add_car_route') }}" class="add-car-form">
+
+        <fieldset>
+            <legend>Car Information</legend>
+
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <input id="brand" type="text" name="brand" required>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Model</label>
+                <input id="model" type="text" name="model" required>
+            </div>
+
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input id="color" type="color" name="color" value="#000000">
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input id="year" type="number" name="year" min="1948" max="2026" required>
+            </div>
+
+            <div class="form-group">
+                <label for="plate_number">Plate Number</label>
+                <input id="plate_number" type="text" name="plate_number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    {% for status in statuses %}
+                        <option value="{{ status.value }}">
+                            {{ status.value|capitalize }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Owner Information</legend>
+
+            <div class="form-group">
+                <label for="client_id">Select Existing Client</label>
+                <select id="client_id" name="client_id" required>
+                    <option value="">-- Choose a Client --</option>
+                    {% for client in clients %}
+                        <option value="{{ client.id }}">
+                            {{ client.firstname }} {{ client.lastname }} ({{ client.email }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <button type="submit">Add Car</button>
+            <a href="{{ url_for('cars_bp.list_cars_route') }}" class="cancel-link">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
