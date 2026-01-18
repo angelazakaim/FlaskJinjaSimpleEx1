@@ -8,14 +8,10 @@
 
 <div class="clients-header">
     <h1>Clients</h1>
+    {% if clients %}
     <a href="{{ url_for('clients_bp.add_client_route') }}" class="btn-add-client">+ Add New Client</a>
+    {% endif %}
 </div>
-<!-- Debug output -->
-<!-- <div style="background: #f0f0f0; padding: 10px; margin: 10px 0;">
-    <strong>DEBUG:</strong> clients = {{ clients }}
-    <br>
-    <strong>DEBUG:</strong> Number of clients = {{ clients|length }}
-</div> -->
 
 {% if clients %}
 <p>There are currently {{ clients|length }} clients registered</p>

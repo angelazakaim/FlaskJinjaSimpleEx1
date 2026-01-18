@@ -8,10 +8,11 @@
 
 <div class="cars-header">
     <h1>Cars in Garage</h1>
+    {% if cars %}
     <a href="{{ url_for('cars_bp.add_car_route') }}" class="btn-add-car">+ Add New Car</a>
+    {% endif %}
 </div>
 
-<p>cars variable = {{ cars }}</p>
 {% if cars %}
 <p>There are currently {{cars|length}} cars in the garage</p>
 <div class="cars-container">
@@ -34,5 +35,4 @@
 {% endblock %}
 
 {% block extra_script %}
-<!-- No extra scripts needed -->
 {% endblock %}
