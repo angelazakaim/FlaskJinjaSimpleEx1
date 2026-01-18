@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clients.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% if client %}
+<h1>{{ client.firstname }} {{ client.lastname }}</h1>
+
+<div class="client-details">
+    <h2>Personal Information</h2>
+    <p><strong>First Name:</strong> {{ client.firstname }}</p>
+    <p><strong>Last Name:</strong> {{ client.lastname }}</p>
+    <p><strong>Email:</strong> {{ client.email }}</p>
+    <p><strong>Phone:</strong> {{ client.tel }}</p>
+    <p><strong>ID Number:</strong> {{ client.identification_number }}</p>
+    
+    <hr>
+    
+    <h2>Cars Owned ({{ client.cars|length }})</h2>
+    {% if client.cars %}
+    <ul class="client-cars-list">
+        {% for car in client.cars %}
+        <li>
+            <a href="{{ url_for('cars_bp.view_car_details', id=car.id) }}">
+                {{ car.brand }} {{ car.model }} ({{ car.year }}) - {{ car.plate_number }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No cars registered for this client</p>
+    {% endif %}
+</div>
+
+<div class="actions">
+    <a href="{{ url_for('clients_bp.edit_client_route', id=client.id) }}">
+        <button>Edit Client</button>
+    </a>
+
+    <a href="{{ url_for('clients_bp.delete_client_route', id=client.id) }}" 
+       onclick="return confirm('Are you sure you want to delete this client? All associated cars will also be deleted.');">
+        <button>Delete Client</button>
+    </a>
+</div>
+
+<a href="{{ url_for('clients_bp.list_clients_route') }}">← Back to Clients</a>
+
+{% else %}
+<p>Client not found</p>
+<a href="{{ url_for('clients_bp.list_clients_route') }}">← Back to Clients</a>
+{% endif %}
+
+{% endblock %}

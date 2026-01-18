@@ -1,11 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{page_title}}</title>
-</head>
-<body>
-    <h1>Clients List</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clients.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="clients-header">
+    <h1>Clients</h1>
+    <a href="{{ url_for('clients_bp.add_client_route') }}" class="btn-add-client">+ Add New Client</a>
+</div>
+<!-- Debug output -->
+<!-- <div style="background: #f0f0f0; padding: 10px; margin: 10px 0;">
+    <strong>DEBUG:</strong> clients = {{ clients }}
+    <br>
+    <strong>DEBUG:</strong> Number of clients = {{ clients|length }}
+</div> -->
+
+{% if clients %}
+<p>There are currently {{ clients|length }} clients registered</p>
+
+<div class="clients-container">
+    {% for client in clients %}
+    <a href="{{ url_for('clients_bp.view_client_details', id=client.id) }}" class="client-card-link">
+        <div class="client-card">
+            <h3>{{ client.firstname }} {{ client.lastname }}</h3>
+            <p><strong>Email:</strong> {{ client.email }}</p>
+            <p><strong>Phone:</strong> {{ client.tel }}</p>
+            <p><strong>ID:</strong> {{ client.identification_number }}</p>
+            <p class="car-count">Cars: {{ client.cars|length }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% else %}
+<p>No clients registered yet</p>
+<a href="{{ url_for('clients_bp.add_client_route') }}" class="btn-add-first-client">Add Your First Client</a>
+{% endif %}
+
+{% endblock %}

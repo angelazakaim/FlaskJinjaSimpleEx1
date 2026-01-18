@@ -18,11 +18,13 @@ from models import Client, Car
 from routes.client_routes import clients_bp
 from routes.car_routes import cars_bp
 
+
 def create_app():
     app = Flask(__name__)
     config_class = config_map[env]
-    config_class.validate()  # Validate before loading
+    config_class.validate()
     app.config.from_object(config_class)
+
     db.init_app(app)
 
     # Logging middleware
@@ -30,7 +32,7 @@ def create_app():
     def log_action():
         logging.info(f"{request.method} {request.path}")
 
-    # Blueprints
+    # Register Blueprints with updated names
     app.register_blueprint(clients_bp, url_prefix="/clients")
     app.register_blueprint(cars_bp, url_prefix="/cars")
 
@@ -43,15 +45,6 @@ def create_app():
     @app.route("/")
     def index():
         return render_template("index.html", page_title="Garage Management")
-
-    @app.route("/clients")
-    def clients():
-        clients = Client.query.all()
-        return render_template(
-            "clients/clients.html",
-            clients=clients,
-            page_title="Clients"
-        )
 
     return app
 

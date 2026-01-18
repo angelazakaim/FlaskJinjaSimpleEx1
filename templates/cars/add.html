@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cars.css') }}">
+{% endblock %}
+
 {% block content %}
 <section class="add-car">
     <h1>Add New Car</h1>
 
-    <form method="POST" action="{{ url_for('cars_bp.add_car_route') }}" class="add-car-form">
+    <form method="POST" action="{{ url_for('cars_bp.list_cars_route') }}" class="add-car-form">
 
         <fieldset>
             <legend>Car Information</legend>

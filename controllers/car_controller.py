@@ -21,7 +21,7 @@ def list_cars_action():
 def details_car_action(id):
     car = Car.query.get_or_404(id)
     return render_template(
-        "cars/car_details.html",
+        "cars/details.html",
         car=car,
         page_title="Car Details"
     )

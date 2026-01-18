@@ -1,0 +1,122 @@
+/* ===========================
+   GLOBAL BASE STYLES
+   =========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ===========================
+   HEADER STYLES
+   =========================== */
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================
+   NAVIGATION STYLES
+   =========================== */
+
+nav {
+    background-color: #34495e;
+    padding: 15px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+nav a:hover {
+    background-color: #2c3e50;
+}
+
+/* ===========================
+   CONTAINER STYLES
+   =========================== */
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    min-height: calc(100vh - 200px);
+}
+
+/* ===========================
+   FOOTER STYLES
+   =========================== */
+
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 0.9rem;
+}
+
+/* ===========================
+   HEADING STYLES
+   =========================== */
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+/* ===========================
+   LINK STYLES
+   =========================== */
+
+a {
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* ===========================
+   UTILITY CLASSES
+   =========================== */
+
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
